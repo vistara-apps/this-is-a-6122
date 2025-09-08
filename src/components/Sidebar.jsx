@@ -1,59 +1,62 @@
 import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { 
   BarChart3, 
-  DollarSign, 
   Users, 
   TrendingUp, 
-  Flame, 
+  Calculator, 
+  Flame,
   Settings,
-  PieChart,
   Home
 } from 'lucide-react'
 
-const menuItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: Home },
-  { id: 'cac', label: 'CAC Tracking', icon: DollarSign },
-  { id: 'ltv', label: 'LTV Prediction', icon: Users },
-  { id: 'mrr', label: 'MRR Projection', icon: TrendingUp },
-  { id: 'burn', label: 'Burn Rate', icon: Flame },
-  { id: 'integrations', label: 'Integrations', icon: Settings },
+const navigation = [
+  { name: 'Dashboard', href: '/', icon: Home },
+  { name: 'CAC Tracking', href: '/cac', icon: BarChart3 },
+  { name: 'LTV Analysis', href: '/ltv', icon: Users },
+  { name: 'MRR Projections', href: '/mrr', icon: TrendingUp },
+  { name: 'Burn Rate', href: '/burn-rate', icon: Flame },
+  { name: 'Integrations', href: '/integrations', icon: Settings },
 ]
 
-const Sidebar = ({ activeTab, setActiveTab }) => {
+function Sidebar() {
+  const location = useLocation()
+
   return (
-    <div className="w-64 bg-surface shadow-card border-r border-gray-100">
-      <div className="p-6">
-        <div className="flex items-center space-x-2">
-          <PieChart className="h-8 w-8 text-primary" />
-          <h1 className="text-xl font-bold text-text-primary">ProfitPilot</h1>
+    <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
+      <div className="flex flex-col flex-grow bg-surface border-r border-gray-200 pt-5 pb-4 overflow-y-auto shadow-card">
+        <div className="flex items-center flex-shrink-0 px-4">
+          <div className="flex items-center">
+            <Calculator className="h-8 w-8 text-primary" />
+            <span className="ml-2 text-xl font-bold text-text-primary">ProfitPilot</span>
+          </div>
         </div>
-        <p className="text-sm text-text-secondary mt-1">Financial Dashboard</p>
-      </div>
-      
-      <nav className="px-4 pb-4">
-        <ul className="space-y-2">
-          {menuItems.map((item) => {
-            const Icon = item.icon
-            const isActive = activeTab === item.id
-            
-            return (
-              <li key={item.id}>
-                <button
-                  onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-left transition-colors ${
+        <div className="mt-5 flex-grow flex flex-col">
+          <nav className="flex-1 px-2 space-y-1">
+            {navigation.map((item) => {
+              const isActive = location.pathname === item.href
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
                     isActive
                       ? 'bg-primary text-white'
                       : 'text-text-secondary hover:bg-gray-50 hover:text-text-primary'
                   }`}
                 >
-                  <Icon className="h-5 w-5" />
-                  <span className="text-sm font-medium">{item.label}</span>
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-      </nav>
+                  <item.icon
+                    className={`mr-3 flex-shrink-0 h-5 w-5 ${
+                      isActive ? 'text-white' : 'text-text-secondary group-hover:text-text-primary'
+                    }`}
+                  />
+                  {item.name}
+                </Link>
+              )
+            })}
+          </nav>
+        </div>
+      </div>
     </div>
   )
 }
