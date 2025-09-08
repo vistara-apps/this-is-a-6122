@@ -7,6 +7,16 @@ dist
 .env.production.local
 .DS_Store
 *.log
+logs/*.log
 coverage
 .nyc_output
 .env.production
+
+# Database
+*.db
+*.sqlite
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
