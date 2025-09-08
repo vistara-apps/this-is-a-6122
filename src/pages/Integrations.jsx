@@ -8,7 +8,7 @@ import {
   AlertCircle, 
   ExternalLink,
   Settings,
-  Refresh
+  RefreshCw
 } from 'lucide-react'
 
 const integrations = [
@@ -256,7 +256,7 @@ function Integrations() {
                     Configure
                   </Button>
                   <Button variant="outline" size="sm">
-                    <Refresh className="h-4 w-4" />
+                    <RefreshCw className="h-4 w-4" />
                   </Button>
                 </>
               ) : integration.status === 'pending' ? (
